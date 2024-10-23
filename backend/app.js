@@ -1,7 +1,6 @@
 
 var createError = require('http-errors');
 var express = require('express');
-const session = require('express-session');
 const helmet = require('helmet')
 var path = require('path');
 var logger = require('morgan');
@@ -41,13 +40,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({secret:'express-session secret'}))
 
 //passport
 app.use(passport.initialize());
 app.use(passport.session());
 
 //bind routes
+app.use('/api/v1/public/register',publicRoutes);
 app.use('/api/v1/public',publicRoutes);
 app.use('/api/v1/login',login);
 app.use('/api/v1/adminlogin',adminLogin);

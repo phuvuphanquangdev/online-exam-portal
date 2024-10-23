@@ -1,11 +1,11 @@
 var mongoose = require("mongoose");
 var config = require('config');
-const adminService = require("../services/admin");
-
+const adminModel = require("../models/admin");
+const { hashPassword } = require("./tool");
 
 //database connection
 mongoose.Promise = global.Promise;
-let options = {
+const options = {
   autoIndex: false, 
   reconnectTries: 100,
   reconnectInterval: 500, 
@@ -14,14 +14,12 @@ let options = {
   useNewUrlParser: true,
   useFindAndModify :  false
 };
-
 if(process.env.NODE_ENV==="docker") {
   options.authSource = config.get('mongodb.authDB')
 }
-
 mongoose.connect(config.get('mongodb.connectionString'),options).then(()=>{
-    console.log("connected to mongoDB");
-    adminService.addAdminIfNotFound();
+  console.log("connected to mongoDB");
+  adminService.addAdminIfNotFound();
     
 }).catch((err)=>{
     console.log("Error connecting to database",err);

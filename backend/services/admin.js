@@ -1,8 +1,6 @@
 var userModel = require('../models/user');
 var subjectModel = require('../models/subject');
 var tool = require('./tool');
-const adminModel = require('../models/admin');
-const { hashPassword } = require('../services/tool');
 
 var teacherRegister = (req,res,next) => {
   var creator = req.user || null;
@@ -380,5 +378,4 @@ module.exports = {
   subjectRemove,
   unblockSubject,
   getDashboardCount,
-  addAdminIfNotFound
 }
